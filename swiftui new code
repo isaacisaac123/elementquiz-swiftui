@@ -1,0 +1,61 @@
+import SwiftUI
+
+// SwiftUI apps are built using structs instead of classes
+struct ContentView: View {
+    
+    // MARK: - State (replaces stored properties in UIKit controllers)
+    
+    // @State tells SwiftUI to watch this variable for changes.
+    // When it changes, the UI automatically updates.
+    @State private var elementList = ["Carbon", "Gold", "Chlorine", "Sodium"]
+    @State private var currentElementIndex = 0
+    @State private var answerText = "?"
+    
+    
+    // MARK: - Body (UI layout)
+    
+    // This describes your UI declaratively
+    var body: some View {
+        VStack(spacing: 20) {
+            
+            // Image view (similar to UIImageView)
+            Image(elementList[currentElementIndex])
+                .resizable()              // Allows resizing
+                .scaledToFit()            // Keeps aspect ratio
+                .frame(height: 200)
+            
+            // Label (similar to UILabel)
+            Text(answerText)
+                .font(.largeTitle)
+            
+            // Button to show answer
+            Button("Show Answer") {
+                showAnswer()
+            }
+            
+            // Button to go to next element
+            Button("Next") {
+                nextElement()
+            }
+        }
+        .padding()
+    }
+    
+    
+    // MARK: - Logic functions (similar to your UIKit methods)
+    
+    func showAnswer() {
+        answerText = elementList[currentElementIndex]
+    }
+    
+    func nextElement() {
+        currentElementIndex += 1
+        
+        if currentElementIndex >= elementList.count {
+            currentElementIndex = 0
+        }
+        
+        // Reset answer
+        answerText = "?"
+    }
+}
